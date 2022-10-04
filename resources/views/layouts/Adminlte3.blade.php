@@ -319,6 +319,47 @@
             </a>
           </li> 
           @endif
+          <li class="nav-item">
+            <a href="https://www.youtube.com/" class="nav-link" style="display:initial">
+              <i class="nav-icon far fa-folder"></i>
+              <p>
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <span><a href="" style="width: 100%;position: absolute;padding-left:0px !important">asdsad</a></span>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="#" class="nav-link" style="display:initial">
+                <i class="nav-icon far fa-folder"></i>
+                <p>
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <span><a href="" style="width: 100%;position: absolute;padding-left:0px !important"> asdasdas das das das das</a></span>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="#" class="nav-link" style="display:initial">
+                  <i class="nav-icon far fa-folder"></i>
+                  <p>
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <span><a href="" style="width: 100%;position: absolute;padding-left:0px !important"> asdasdas das das das das</a></span>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fas far fa-folder"></i>
+                      <p>
+                        Jenis
+                      </p>
+                    </a>
+                  </li> 
+                </ul> 
+              </li>
+              </ul> 
+            </li>
+            </ul> 
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
