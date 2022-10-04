@@ -26,15 +26,35 @@
 ._forminput{
   background-color:silver;border-radius:4px;padding: 10px 5px 5px 5px;
 }
-nav ul li ul li a{
-  padding-left: 40px !important;
+nav ul .li_x a{
+  padding: 10px 0px 10px 22px !important;
 } 
+nav ul .li_x ._sidenew{
+  width: 100%;white-space: break-spaces;display: table-cell;padding: 10px 10px !important;
+}
+nav ul .li_x ._sidenew:hover{
+  background-color: rgba(255,255,255,.1);
+  color: #fff;
+  border-radius: 0.25rem;
+}
+.nav-sidebar .li_x .nav-link>.right, .nav-sidebar .li_x .nav-link>p>.right {
+  right: 1.5rem !important;
+  top: 0.8rem !important;
+  /* margin-top: 5px !important; */
+}
+.li_x .nav-item{
+  border-left: 2px solid white;
+  border-left-style: dotted;
+}
+.nav-sidebar .li_x .nav-link{
+  background-color: transparent !important;
+}
 
-nav ul li ul li i{
+/* nav ul .li_x i{
   position: absolute !important;
   margin-left: -30px !important;
   margin-top: 5px !important;
-} 
+}  */
 .btn-absolute{
   position: absolute;
   z-index: 999;

@@ -63,10 +63,10 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::get('statusnelayan', [App\Http\Controllers\StatusNelayanController::class, 'index']);
 
         // Master Petani
-        Route::get('petani', [App\Http\Controllers\PetaniController::class, 'index']);
-        Route::post('storepetani', [App\Http\Controllers\PetaniController::class, 'store']);
-        Route::post('updatepetani/{id}', [App\Http\Controllers\PetaniController::class, 'update']);
-        Route::post('hapuspetani/{id}', [App\Http\Controllers\PetaniController::class, 'destroy']); 
+        Route::get('menu', [App\Http\Controllers\MenuController::class, 'index']);
+        Route::post('storemenu', [App\Http\Controllers\MenuController::class, 'store']);
+        Route::post('updatemenu/{id}', [App\Http\Controllers\MenuController::class, 'update']);
+        Route::post('hapusmenu/{id}', [App\Http\Controllers\MenuController::class, 'destroy']); 
         
         // Template
         Route::get('template', [App\Http\Controllers\AdminController::class, 'indextmp']);

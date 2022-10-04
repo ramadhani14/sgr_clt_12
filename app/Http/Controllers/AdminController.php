@@ -23,9 +23,9 @@ class AdminController extends Controller
         $menu = "home";
         $submenu="";
         
-        $petani = MstPetani::all();
+        $user = User::all();
         $data_param = [
-            'submenu','menu','petani'
+            'submenu','menu','user'
         ];
 
         return view('home/admin')->with(compact($data_param));

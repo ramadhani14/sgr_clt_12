@@ -32,13 +32,13 @@
             <div class="col-lg-3 col-6">
               <div class="small-box bg-warning">
                 <div class="inner">
-                <h3>{{count($petani)}}</h3>
-                <p>Petani</p>
+                <h3>{{count($user)}}</h3>
+                <p>User</p>
                 </div>
                 <div class="icon">
                 <i class="ion ion-person-add"></i>
                 </div>
-                <a href="{{url('admin/petani')}}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- <a href="{{url('admin/user')}}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a> -->
               </div>
             </div>
           </div>

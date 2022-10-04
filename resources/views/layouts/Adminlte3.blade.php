@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @php
     $template = App\Models\Template::where('id','<>','~')->first();
-    $datamaster = App\Models\MstKomoditas::orderBy('judul','asc')->where('status_master',1)->get();
-    $datajenis = App\Models\MstKomoditas::orderBy('judul','asc')->where('status_jenis',1)->get();
   @endphp
   <title>{{$template->nama}}</title>
   <link href="{{ asset($template->logo_kecil) }}" rel="icon">
@@ -260,106 +258,75 @@
               </p>
             </a>
           </li> 
-          <li class="nav-item {{$menu=='master' ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{$menu=='master' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-tasks"></i>
-              <p>
-                Master
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            @foreach($datajenis as $datajns)
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{url('admin/jenis/'.$datajns->singkatan)}}" class="nav-link {{$submenu==$datajns->singkatan ? 'active' : '' }}">
-                  <i class="fas fa-list-ul"></i>
-                  <p>
-                    Jenis {{$datajns->judul}}
-                  </p>
-                </a>
-              </li> 
-            </ul> 
-            @endforeach
-          </li>
-          <li class="nav-item {{$menu=='komoditas' ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{$menu=='komoditas' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-tasks"></i>
-              <p>
-                Komoditas
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            @foreach($datamaster as $datajns)
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{url('admin/komoditas/'.$datajns->komoditas)}}" class="nav-link {{$submenu==$datajns->komoditas ? 'active' : '' }}">
-                  <i class="fas fa-list-ul"></i>
-                  <p>
-                    {{$datajns->judul}}
-                  </p>
-                </a>
-              </li> 
-            </ul> 
-            @endforeach
-          </li>
           <li class="nav-item">
-            <a href="{{url('admin/statusnelayan')}}" class="nav-link {{$menu=='statusnelayan' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-check"></i>
+            <a href="{{url('admin/menu')}}" class="nav-link {{$menu=='menu' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-bars"></i>
               <p>
-                Status Nelayan
+                Website Menu
               </p>
             </a>
           </li> 
-          <li class="nav-item">
-            <a href="{{url('admin/petani')}}" class="nav-link {{$menu=='petani' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-users"></i>
+          <li class="li_x nav-item">
+            <a href="#" class="nav-link" style="display: table-cell;">
+              <i class="right fas fa-angle-left"></i>
+              <i class="nav-icon fas fa-folder" style="display: contents;"></i>
               <p>
-                Petani
               </p>
             </a>
-          </li> 
-          @endif
-          <li class="nav-item">
-            <a href="https://www.youtube.com/" class="nav-link" style="display:initial">
-              <i class="nav-icon far fa-folder"></i>
-              <p>
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <span><a href="" style="width: 100%;position: absolute;padding-left:0px !important">asdsad</a></span>
+            <a href="" class="_sidenew"> asdasdas</a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-              <a href="#" class="nav-link" style="display:initial">
-                <i class="nav-icon far fa-folder"></i>
-                <p>
-                  <i class="right fas fa-angle-left"></i>
-                </p>
+              <a href="#" class="nav-link" style="display: table-cell;">
+                <i class="right fas fa-angle-left"></i>
+                <i class="nav-icon fas fa-folder" style="display: contents;"></i>
               </a>
-              <span><a href="" style="width: 100%;position: absolute;padding-left:0px !important"> asdasdas das das das das</a></span>
+              <a href="" class="_sidenew"> asdasdas asdasdas das dasdasd as das das das as</a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="#" class="nav-link" style="display:initial">
-                  <i class="nav-icon far fa-folder"></i>
-                  <p>
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
+                <a href="#" class="nav-link" style="display: table-cell;">
+                  <i class="right fas fa-angle-left"></i>
+                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
                 </a>
-                <span><a href="" style="width: 100%;position: absolute;padding-left:0px !important"> asdasdas das das das das</a></span>
+                <a href="" class="_sidenew"> asdasdas</a>
                 <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="fas far fa-folder"></i>
-                      <p>
-                        Jenis
-                      </p>
-                    </a>
-                  </li> 
+                 
+                </ul> 
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" style="display: table-cell;">
+                  <i class="right fas fa-angle-left"></i>
+                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
+                </a>
+                <a href="" class="_sidenew"> asdasdas</a>
+                <ul class="nav nav-treeview">
+                 
+                </ul> 
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" style="display: table-cell;">
+                  <i class="right fas fa-angle-left"></i>
+                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
+                </a>
+                <a href="" class="_sidenew"> asdasdas</a>
+                <ul class="nav nav-treeview">
+                  
                 </ul> 
               </li>
               </ul> 
             </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" style="display: table-cell;">
+                  <i class="right fas fa-angle-left"></i>
+                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
+                </a>
+                <a href="" class="_sidenew"> asdasdas</a>
+                <ul class="nav nav-treeview">
+                 
+                </ul> 
+              </li>
             </ul> 
           </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

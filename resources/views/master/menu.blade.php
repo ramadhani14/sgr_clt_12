@@ -15,13 +15,13 @@
 @endsection
 
 @section('contentheader')
-<h1 class="m-0">Petani</h1>
+<h1 class="m-0">Website Menu</h1>
 @endsection
 
 @section('contentheadermenu')
 <ol class="breadcrumb float-sm-right">
     <!-- <li class="breadcrumb-item">Master</li> -->
-    <li class="breadcrumb-item active">Petani</li>
+    <li class="breadcrumb-item active">Website Menu</li>
 </ol>
 @endsection
 
@@ -47,8 +47,8 @@
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th>Alamat</th>
+                    <th>Parent Menu</th>
+                    <th>Nama Menu</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -56,10 +56,8 @@
                   @foreach($data as $key)
                   <tr>
                     <td width="1%">{{$loop->iteration}}</td>
-                    <td width="25%">{{$key->nama}}</td>
-                    <td class="_align_center">
-                      {{$key->alamat}}
-                    </td>
+                    <td width="25%">{{$key->id_atas}}</td>
+                    <td class="_align_center">{{$key->nama}}</td>
                     <td width="1%" class="_align_center">
                       <div class="btn-group">
                         <span data-toggle="tooltip" data-placement="left" title="Ubah Data">
@@ -111,21 +109,21 @@
             <div class="modal-body">
               <!-- <div class="card-body"> -->
                 <div class="form-group">
-                    <label for="nik_{{$key->id}}">NIK<span class="bintang">*</span></label>
-                    <input type="text" class="form-control int" id="nik_{{$key->id}}" name="nik[]" placeholder="NIK" value="{{$key->nik}}">
+                  <label for="posisi_{{$key->id}}">Posisi</label>
+                    <select class="form-control" id="posisi_{{$key->id}}" name="posisi[]">
+                      <option value="">-- Pilih Posisi --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="parent_menu_{{$key->id}}">Parent Menu</label>
+                    <select class="form-control" id="parent_menu_{{$key->id}}" name="parent_menu[]">
+                      <option value="">-- Pilih Parent Menu --</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="nama_{{$key->id}}">Nama<span class="bintang">*</span></label>
                     <input type="text" class="form-control" id="nama_{{$key->id}}" name="nama[]" placeholder="Nama" value="{{$key->nama}}">
-                </div>
-                <div class="form-group">
-                    <label for="alamat_{{$key->id}}">Alamat</label>
-                    <textarea name="alamat[]" id="alamat_{{$key->id}}" rows="5" class="form-control" placeholder="Alamat">{{$key->alamat}}</textarea>  
-                </div>  
-                <div class="form-group">
-                    <label for="no_hp_{{$key->id}}">No.Hp<span class="bintang">*</span></label>
-                    <input type="text" class="form-control int" id="no_hp_{{$key->id}}" name="no_hp[]" placeholder="No.Hp" value="{{$key->no_hp}}">
-                </div>       
+                </div>    
                 <!-- /.form-group -->
               <!-- </div> -->
             </div>
@@ -155,7 +153,7 @@
           <form method="post" id="formHapus_{{$key->id}}" class="form-horizontal">
             @csrf
             <div class="modal-body">
-                <h6> Apakah anda ingin menghapus data petani {{$key->nama}}?</h6>
+                <h6> Apakah anda ingin menghapus data menu {{$key->nama}}?</h6>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -185,21 +183,25 @@
           <div class="modal-body">
               <!-- <div class="card-body"> -->
               <div class="form-group">
-                <label for="nik_add">NIK<span class="bintang">*</span></label>
-                <input type="text" class="form-control int" id="nik_add" name="nik_add" placeholder="NIK">
+                <label for="posisi_add">Posisi</label>
+                  <select class="form-control" id="posisi_add" name="posisi_add">
+                    <option value="">-- Pilih Posisi --</option>
+                    @for($a=1 ; $a<=$batasmenu ; $a++)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endfor
+                  </select>
+              </div>
+            
+              <div class="form-group">
+                <label for="parent_menu_add">Parent Menu</label>
+                  <select class="form-control" id="parent_menu_add" name="parent_menu_add">
+                    <option value="">-- Pilih Parent Menu --</option>
+                  </select>
               </div>
               <div class="form-group">
                   <label for="nama_add">Nama<span class="bintang">*</span></label>
                   <input type="text" class="form-control" id="nama_add" name="nama_add" placeholder="Nama">
               </div>
-              <div class="form-group">
-                  <label for="alamat_add">Alamat</label>
-                  <textarea name="alamat_add" id="alamat_add" rows="5" class="form-control" placeholder="Alamat"></textarea>  
-              </div>  
-              <div class="form-group">
-                  <label for="no_hp_add">No.Hp<span class="bintang">*</span></label>
-                  <input type="text" class="form-control int" id="no_hp_add" name="no_hp_add" placeholder="No.Hp">
-              </div>  
               <!-- <div class="card-body"> -->
               <!-- /.form-group -->
             <!-- </div> -->
@@ -282,7 +284,7 @@
         idform = $(this).attr('idform');
         var formData = new FormData($('#formHapus_' + idform)[0]);
 
-        var url = "{{ url('admin/hapuspetani') }}/"+idform;
+        var url = "{{ url('admin/hapusmenu') }}/"+idform;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -330,25 +332,25 @@
         idform = $(this).attr('idform');
         $('#formData_'+idform).validate({
           rules: {
-            'nik[]': {
+            'posisi[]': {
               required: true
             },
             'nama[]': {
               required: true
             },
-            'no_hp[]': {
+            'parent_menu[]': {
               required: true
             }
           },
           messages: {
-            'nik[]': {
-              required: "NIK tidak boleh kosong"
+            'posisi[]': {
+              required: "Posisi tidak boleh kosong"
             },
             'nama[]': {
               required: "Nama tidak boleh kosong"
             },
-            'no_hp[]': {
-              required: "No.Hp tidak boleh kosong"
+            'parent_menu[]': {
+              required: "Parent menu tidak boleh kosong"
             }
           },
           errorElement: 'span',
@@ -367,7 +369,7 @@
           
             var formData = new FormData($('#formData_'+idform)[0]);
 
-            var url = "{{ url('admin/updatepetani') }}/"+idform;
+            var url = "{{ url('admin/updatemenu') }}/"+idform;
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -413,25 +415,25 @@
     // Fungsi Add Data
     $('#_formData').validate({
           rules: {
-            nik_add: {
+            posisi_add: {
               required: true
             },
             nama_add: {
               required: true
             },
-            no_hp_add: {
+            parent_menu_add: {
               required: true
             }
           },
           messages: {
-            nik_add: {
-              required: "NIK tidak boleh kosong"
+            posisi_add: {
+              required: "Posisi tidak boleh kosong"
             },
             nama_add: {
               required: "Nama tidak boleh kosong"
             },
-            no_hp_add: {
-              required: "No.Hp tidak boleh kosong"
+            parent_menu_add: {
+              required: "Parent menu tidak boleh kosong"
             }
           },
           errorElement: 'span',
@@ -480,7 +482,7 @@
           
             var formData = new FormData($('#_formData')[0]);
 
-            var url = "{{ url('admin/storepetani') }}";
+            var url = "{{ url('admin/storemenu') }}";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

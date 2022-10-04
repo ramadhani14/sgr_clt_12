@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMstKomoditas extends Migration
+class CreateMenu extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateMstKomoditas extends Migration
      */
     public function up()
     {
-        Schema::create('mst_komoditas', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->string('komoditas');
-            $table->string('singkatan');
-            $table->integer('status_master')->comment = '0 = Tidak Ada ; 1 = Ada';
-            $table->integer('status_jenis')->comment = '0 = Tidak Ada ; 1 = Ada';
+            $table->string('posisi')->nullable();
+            $table->string('parent_menu')->nullable();
+            $table->string('nama')->nullable();
             $table->integer('created_by');
             $table->datetime('created_at');
             $table->integer('updated_by')->nullable();
@@ -36,6 +34,6 @@ class CreateMstKomoditas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mst_komoditas');
+        Schema::dropIfExists('menu');
     }
 }
