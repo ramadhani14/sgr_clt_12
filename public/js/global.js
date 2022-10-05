@@ -440,6 +440,35 @@ function datatablemenu(id){
         } ]
     });
 }
+
+function datatabletable(id){
+    $("#"+id).DataTable({
+        "lengthChange": false,
+        "oLanguage": {
+            "sEmptyTable": "Belum Ada Data"
+        },
+        "aaSorting": [],
+        "columnDefs": [ {
+            "targets": [0,2],
+            "orderable": false
+        } ]
+    });
+}
+
+function datatabletablec(id){
+    $("#"+id).DataTable({
+        "lengthChange": false,
+        "oLanguage": {
+            "sEmptyTable": "Belum Ada Data"
+        },
+        "aaSorting": [],
+        "columnDefs": [ {
+            "targets": [],
+            "orderable": false
+        } ]
+    });
+}
+
 function datatablekomoditas(id){
     $("#"+id).DataTable({
         "lengthChange": false,

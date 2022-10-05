@@ -267,6 +267,24 @@
               </p>
             </a>
           </li> 
+          <li class="nav-item">
+            <a href="{{url('admin/table')}}" class="nav-link {{$menu=='table' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Table Setting
+              </p>
+            </a>
+          </li> 
+
+          <li class="nav-header">CUSTOM MENU</li>
+          <li class="nav-item">
+            <a href="{{url('admin/tablec')}}" class="nav-link {{$menu=='tablec' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-database"></i>
+              <p>
+                Table Content
+              </p>
+            </a>
+          </li> 
           @php
             $menu1 = App\Models\Menu::where('posisi',1)->get();
           @endphp

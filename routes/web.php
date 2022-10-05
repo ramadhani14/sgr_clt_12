@@ -54,6 +54,18 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::post('hapusmenu/{id}', [App\Http\Controllers\MenuController::class, 'destroy']); 
         Route::get('content/{id}', [App\Http\Controllers\MenuController::class, 'content']);
 
+        // Master Table
+        Route::get('table', [App\Http\Controllers\TableController::class, 'index']);
+        Route::post('storetable', [App\Http\Controllers\TableController::class, 'store']);
+        Route::post('updatetable/{id}', [App\Http\Controllers\TableController::class, 'update']);
+        Route::post('hapustable/{id}', [App\Http\Controllers\TableController::class, 'destroy']); 
+
+        // Master Table Content
+        Route::get('tablec', [App\Http\Controllers\TableController::class, 'indexc']);
+        Route::post('storetablec', [App\Http\Controllers\TableController::class, 'storec']);
+        Route::post('updatetablec/{id}', [App\Http\Controllers\TableController::class, 'updatec']);
+        Route::post('hapustablec/{id}', [App\Http\Controllers\TableController::class, 'destroyc']); 
+
         // Template
         Route::get('template', [App\Http\Controllers\AdminController::class, 'indextmp']);
         Route::post('/updatetemplate/{id}', [App\Http\Controllers\AdminController::class, 'updatetmp']);

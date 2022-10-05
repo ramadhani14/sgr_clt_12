@@ -18,12 +18,12 @@ class CreateTemplate extends Seeder
         $template = [
             [
                 'nama'=>'Sagara Muslim Solution',
-                'email'=>'',
+                'email'=>'example@gmail.com',
                 'no_telp'=>'',
                 'no_wa'=>'',
                 'alamat'=>'',
                 'kode_pos'=>'',
-                'logo_besar'=>'image/global/logo_besar.png',
+                'logo_besar'=>'image/global/logo_kecil.png',
                 'logo_kecil'=>'image/global/logo_kecil.png',
                 'facebook'=>'',
                 'twitter'=>'',

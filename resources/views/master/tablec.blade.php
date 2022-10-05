@@ -15,13 +15,13 @@
 @endsection
 
 @section('contentheader')
-<h1 class="m-0">Website Menu</h1>
+<h1 class="m-0">Table Content</h1>
 @endsection
 
 @section('contentheadermenu')
 <ol class="breadcrumb float-sm-right">
     <!-- <li class="breadcrumb-item">Master</li> -->
-    <li class="breadcrumb-item active">Website Menu</li>
+    <li class="breadcrumb-item active">Table Content</li>
 </ol>
 @endsection
 
@@ -37,19 +37,35 @@
               </div> -->
               <!-- /.card-header -->
               <div class="card-body">
+              @if(count($kolom)<=0)
+              
+              <span data-toggle="tooltip" data-placement="left" title="Harap tambahkan kolom terlebih dahulu pada menu Table Setting">
+                <button type="button" class="btn btn-sm btn-primary disabled">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </span>
+              @else
               <span data-toggle="tooltip" data-placement="left" title="Tambah Data">
                 <button data-toggle="modal" data-target="#modal-tambah" type="button" class="btn btn-sm btn-primary btn-add-absolute">
                   <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
               </span>
+             
               <!-- <button data-toggle="modal" data-target="#modal-tambah" type="button" class="btn btn-md btn-primary btn-absolute">Tambah</button> -->
                 <table id="tabledata" class="table  table-striped">
                   <thead>
                   <tr>
                     <!-- <th>No</th> -->
-                    <th>Posisi</th>
-                    <th>Nama Menu</th>
-                    <th>Parent Menu</th>
+                    @php
+                    $judulkolom=array();
+                    @endphp
+
+                    @foreach($kolom as $datakolom)
+                    @php
+                    array_push($judulkolom,$datakolom->judul)
+                    @endphp
+                    <th>{{$datakolom->judul}}</th>
+                    @endforeach
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -57,26 +73,27 @@
                   @foreach($data as $key)
                   <tr>
                     <!-- <td width="1%">{{$loop->iteration}}</td> -->
-                    <td width="1%">{{$key->posisi}}</td>
-                    <td width="25%">{{$key->nama}}</td>
-                    <td class="_align_center" width="25%">{{$key->parent_menu <> 0 ? $key->parent_menu_r->nama : "-"}}</td>
+                    @if(count($kolom)>0)
+                      @for($a=1 ; $a<=count($kolom) ; $a++)
+                      @php
+                        $valtable = "val".$a;
+                        $atable = "a".$a;
+                      @endphp
+                      @if($key->$atable)
+                        <td width="25%"><a target="_blank" href="{{$key->$atable}}">{{$key->$valtable}}</a></td>
+                      @else
+                        <td width="25%">{{$key->$valtable}}</td>
+                      @endif
+                      @endfor
+                    @endif
                     <td width="1%" class="_align_center">
                       <div class="btn-group">
                         <span data-toggle="tooltip" data-placement="left" title="Ubah Data">
                           <button data-toggle="modal" data-target="#modal-edit-{{$key->id}}" type="button" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></button>
                         </span>
-                        @php
-                          $cek = App\Models\Menu::where('parent_menu',$key->id)->get();
-                        @endphp
-                        @if(count($cek)<=0)
                         <span data-toggle="tooltip" data-placement="left" title="Hapus Data">
                           <button data-toggle="modal" data-target="#modal-hapus-{{$key->id}}" type="button" class="btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></button>
                         </span>
-                        @else
-                        <span data-toggle="tooltip" data-placement="left" title="Hapus Data Parent Menu ({{$key->nama}}) Terlebih Dahulu">
-                          <button type="button" class="btn btn-sm btn-outline-danger disabled"><i class="far fa-trash-alt"></i></button>
-                        </span>
-                        @endif
                       </div>
                     </td>
                   </tr>
@@ -92,6 +109,7 @@
                   </tr>
                   </tfoot> -->
                 </table>
+                @endif
               </div>
               <!-- /.card-body -->
             </div>
@@ -119,39 +137,29 @@
             @csrf
             <div class="modal-body">
               <!-- <div class="card-body"> -->
-                <div class="form-group select2readonly">
-                  <label for="posisi_{{$key->id}}">Posisi</label>
-                    <select class="form-control posisi" id="posisi_{{$key->id}}" name="posisi[]" id_parent_menu="parent_menu_{{$key->id}}">
-                      <option value="">-- Pilih Posisi --</option>
-                      @for($a=1 ; $a<=$batasmenu ; $a++)
-                      <option value="{{$a}}" {{$key->posisi==$a ? "selected" : ""}}>{{$a}}</option>
-                      @endfor
-                    </select>
-                </div>
-                <div class="form-group">
-                  <label for="parent_menu_{{$key->id}}">Parent Menu</label>
-                    <select class="form-control parent_menu" id="parent_menu_{{$key->id}}" name="parent_menu[]">
-                      <option value="">-- Pilih Parent Menu --</option>
-                      @if($key->posisi>1)
-                        @php
-                          $menuparent = App\Models\Menu::where('posisi',$key->posisi-1)->get();
-                        @endphp
-                        @foreach($menuparent as $datamenu )
-                          <option value="{{$datamenu->id}}" {{$key->parent_menu==$datamenu->id ? "selected" : ""}}>{{$datamenu->nama}}</option>
-                        @endforeach
-                      @else
-                          <option value="0" selected>-</option>
-                      @endif
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="nama_{{$key->id}}">Nama<span class="bintang">*</span></label>
-                    <input type="text" class="form-control" id="nama_{{$key->id}}" name="nama[]" placeholder="Nama" value="{{$key->nama}}">
-                </div> 
-                <div class="form-group">
-                    <label for="content_{{$key->id}}">Content</label>
-                    <textarea name="content[]" id="content_{{$key->id}}" class="form-control content_" placeholder="Content">{{$key->content}}</textarea>  
-                </div>    
+                @if(count($kolom)>0)
+                <div class="row">
+                  @for($a=1 ; $a<=count($kolom) ; $a++)
+                  @php
+                  $valtable = "val".$a;
+                  $atable = "a".$a;
+                  @endphp
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="val_{{$a}}_{{$key->id}}">{{$judulkolom[$a-1]}}<span class="bintang">*</span></label>
+                      <input type="text" class="form-control" id="val_{{$a}}_{{$key->id}}" name="val_{{$a}}[]" placeholder="{{$judulkolom[$a-1]}}" value="{{$key->$valtable}}">
+                    </div>  
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="a_{{$a}}_{{$key->id}}">Link</label>
+                      <input type="text" class="form-control" id="a_{{$a}}_{{$key->id}}" name="a_{{$a}}[]" placeholder="Link" value="{{$key->$atable}}">
+                    </div>  
+                  </div>  
+                  @endfor
+                </div>  
+                @endif
+               
                 <!-- /.form-group -->
               <!-- </div> -->
             </div>
@@ -181,7 +189,7 @@
           <form method="post" id="formHapus_{{$key->id}}" class="form-horizontal">
             @csrf
             <div class="modal-body">
-                <h6> Apakah anda ingin menghapus menu {{$key->nama}}?</h6>
+                <h6> Apakah anda ingin menghapus data ini?</h6>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -210,30 +218,24 @@
           @csrf
           <div class="modal-body">
               <!-- <div class="card-body"> -->
-              <div class="form-group">
-                <label for="posisi_add">Posisi</label>
-                  <select class="form-control posisi" id="posisi_add" name="posisi_add" id_parent_menu="parent_menu_add">
-                    <option value="">-- Pilih Posisi --</option>
-                    @for($a=1 ; $a<=$batasmenu ; $a++)
-                    <option value="{{$a}}">{{$a}}</option>
-                    @endfor
-                  </select>
-              </div>
-            
-              <div class="form-group">
-                <label for="parent_menu_add">Parent Menu</label>
-                  <select class="form-control parent_menu" id="parent_menu_add" name="parent_menu_add">
-                    <option value="">-- Pilih Parent Menu --</option>
-                  </select>
-              </div>
-              <div class="form-group">
-                  <label for="nama_add">Nama<span class="bintang">*</span></label>
-                  <input type="text" class="form-control" id="nama_add" name="nama_add" placeholder="Nama">
-              </div>
-              <div class="form-group">
-                  <label for="content_add">Content</label>
-                  <textarea name="content_add" id="content_add" class="form-control content_" placeholder="Content"></textarea>  
-              </div>  
+                @if(count($kolom)>0)
+                <div class="row">
+                  @for($a=1 ; $a<=count($kolom) ; $a++)
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="val_{{$a}}_add">{{$judulkolom[$a-1]}}<span class="bintang">*</span></label>
+                      <input type="text" class="form-control" id="val_{{$a}}_add" name="val_{{$a}}_add" placeholder="{{$judulkolom[$a-1]}}">
+                    </div>  
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="a_{{$a}}_add">Link</label>
+                      <input type="text" class="form-control" id="a_{{$a}}_add" name="a_{{$a}}_add" placeholder="Link">
+                    </div>  
+                  </div>
+                  @endfor
+                </div>
+                @endif
               <!-- <div class="card-body"> -->
               <!-- /.form-group -->
             <!-- </div> -->
@@ -282,140 +284,23 @@
 <script src="{{ asset('layout/adminlte3/dist/js/demo.js') }}"></script>
 <!-- Page specific script -->
 <!-- DatePicker -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css"> -->
 <!--  Flatpickr  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
-<!-- Tinymce -->
-<script src="https://cdn.tiny.cloud/1/6yq8fapml30gqjogz5ilm4dlea09zn9rmxh9mr8fe907tqkj/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script> -->
 
 <script>
   $(document).ready(function(){
     // NIK
-    $(".int").on('input paste', function () {
-      hanyaAngka(this);
-    });
+    // $(".int").on('input paste', function () {
+    //   hanyaAngka(this);
+    // });
     // bsCustomFileInput.init();
     // $(document).on('change', '.input-foto', function (e) {
     //     var idphoto = $(this).attr('id');
     //     onlyPhoto(idphoto);
     // });
-    datatablemenu("tabledata");
-
-    tinymce.init({
-        selector: ".content_", theme: "modern",
-        plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons paste textcolor"
-        ],
-        toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
-        toolbar2: " | link unlink anchor | image media | forecolor backcolor  | print preview code ",
-        image_advtab: true,
-        height : "500",
-        file_picker_callback: function (cb, value, meta) {
-        var input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-
-        /*
-          Note: In modern browsers input[type="file"] is functional without
-          even adding it to the DOM, but that might not be the case in some older
-          or quirky browsers like IE, so you might want to add it to the DOM
-          just in case, and visually hide it. And do not forget do remove it
-          once you do not need it anymore.
-        */
-
-        input.onchange = function () {
-          var file = this.files[0];
-
-          var reader = new FileReader();
-          reader.onload = function () {
-            /*
-              Note: Now we need to register the blob in TinyMCEs image blob
-              registry. In the next release this part hopefully won't be
-              necessary, as we are looking to handle it internally.
-            */
-            var id = 'blobid' + (new Date()).getTime();
-            var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-            var base64 = reader.result.split(',')[1];
-            var blobInfo = blobCache.create(id, file, base64);
-            blobCache.add(blobInfo);
-
-            /* call the callback and populate the Title field with the file name */
-            cb(blobInfo.blobUri(), { title: file.name });
-          };
-          reader.readAsDataURL(file);
-        };
-
-        input.click();
-      }
-    });
-
-    //Initialize Select2 Elements
-    $('.posisi').select2({
-      placeholder: "-- Pilih Posisi --"
-    });
-
-    $('.parent_menu').select2({
-      placeholder: "-- Pilih Parent Menu --"
-    });
-
-    $('.posisi').on('select2:select', function (e) {
-        var id_parent_menu = $(this).attr('id_parent_menu');
-        var val = $(this).val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "{{url('getparentmenu')}}",
-            type: 'POST',
-            dataType: "JSON",
-            data: {
-                "val":val
-            },
-            beforeSend: function () {
-                // $.LoadingOverlay("show");
-                $.LoadingOverlay("show", {
-                    image       : "/image/global/loading.gif"
-                });
-            },
-            success: function (response) {
-                if (response.status == true) {
-                    $("#"+id_parent_menu).html("");
-                    if(response.databarudb.length>0){
-                      var databaru = [ 
-                        {id : "", text:'-- Pilih Parent Menu --'} 
-                      ]; 
-                    }else{
-                      var databaru = [ 
-                        {id : 0, text:'-'} 
-                      ]; 
-                    }
-                    // console.log(alerts);
-                    response.databarudb.forEach(element => databaru.push(element));
-                    // console.log(alerts);
-                    $("#"+id_parent_menu).select2({
-                        data: databaru
-                    });
-                }else{
-                    Swal.fire({
-                        title: "Error!!!",
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                }
-            },
-            error: function (xhr, status) {
-                alert('Error!!!');
-            },
-            complete: function () {
-                $.LoadingOverlay("hide");
-            }
-        });
-    });
+    datatabletablec("tabledata");
 
     // $(document).on('change', '.input-photo', function (e) {
     //     var idphoto = $(this).attr('id');
@@ -427,7 +312,7 @@
         idform = $(this).attr('idform');
         var formData = new FormData($('#formHapus_' + idform)[0]);
 
-        var url = "{{ url('admin/hapusmenu') }}/"+idform;
+        var url = "{{ url('admin/hapustablec') }}/"+idform;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -475,25 +360,127 @@
         idform = $(this).attr('idform');
         $('#formData_'+idform).validate({
           rules: {
-            'posisi[]': {
+            'val_1[]': {
               required: true
             },
-            'nama[]': {
+            'val_2[]': {
               required: true
             },
-            'parent_menu[]': {
+            'val_3[]': {
+              required: true
+            },
+            'val_4[]': {
+              required: true
+            },
+            'val_5[]': {
+              required: true
+            },
+            'val_6[]': {
+              required: true
+            },
+            'val_7[]': {
+              required: true
+            },
+            'val_8[]': {
+              required: true
+            },
+            'val_9[]': {
+              required: true
+            },
+            'val_10[]': {
+              required: true
+            },
+            'val_11[]': {
+              required: true
+            },
+            'val_12[]': {
+              required: true
+            },
+            'val_13[]': {
+              required: true
+            },
+            'val_14[]': {
+              required: true
+            },
+            'val_15[]': {
+              required: true
+            },
+            'val_16[]': {
+              required: true
+            },
+            'val_17[]': {
+              required: true
+            },
+            'val_18[]': {
+              required: true
+            },
+            'val_19[]': {
+              required: true
+            },
+            'val_20[]': {
               required: true
             }
           },
           messages: {
-            'posisi[]': {
-              required: "Posisi tidak boleh kosong"
+            'val_1[]': {
+              required: "Kolom ini tidak boleh kosong"
             },
-            'nama[]': {
-              required: "Nama tidak boleh kosong"
+            'val_2[]': {
+              required: "Kolom ini tidak boleh kosong"
             },
-            'parent_menu[]': {
-              required: "Parent menu tidak boleh kosong"
+            'val_3[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_4[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_5[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_6[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_7[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_8[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_9[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_10[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_11[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_12[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_13[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_14[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_15[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_16[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_17[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_18[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_19[]': {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            'val_20[]': {
+              required: "Kolom ini tidak boleh kosong"
             }
           },
           errorElement: 'span',
@@ -512,7 +499,7 @@
           
             var formData = new FormData($('#formData_'+idform)[0]);
 
-            var url = "{{ url('admin/updatemenu') }}/"+idform;
+            var url = "{{ url('admin/updatetablec') }}/"+idform;
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -558,25 +545,127 @@
     // Fungsi Add Data
     $('#_formData').validate({
           rules: {
-            posisi_add: {
+            val_1_add: {
               required: true
             },
-            nama_add: {
+            val_2_add: {
               required: true
             },
-            parent_menu_add: {
+            val_3_add: {
+              required: true
+            },
+            val_4_add: {
+              required: true
+            },
+            val_5_add: {
+              required: true
+            },
+            val_6_add: {
+              required: true
+            },
+            val_7_add: {
+              required: true
+            },
+            val_8_add: {
+              required: true
+            },
+            val_9_add: {
+              required: true
+            },
+            val_10_add: {
+              required: true
+            },
+            val_11_add: {
+              required: true
+            },
+            val_12_add: {
+              required: true
+            },
+            val_13_add: {
+              required: true
+            },
+            val_14_add: {
+              required: true
+            },
+            val_15_add: {
+              required: true
+            },
+            val_16_add: {
+              required: true
+            },
+            val_17_add: {
+              required: true
+            },
+            val_18_add: {
+              required: true
+            },
+            val_19_add: {
+              required: true
+            },
+            val_20_add: {
               required: true
             }
           },
           messages: {
-            posisi_add: {
-              required: "Posisi tidak boleh kosong"
+            val_1_add: {
+              required: "Kolom ini tidak boleh kosong"
             },
-            nama_add: {
-              required: "Nama tidak boleh kosong"
+            val_2_add: {
+              required: "Kolom ini tidak boleh kosong"
             },
-            parent_menu_add: {
-              required: "Parent menu tidak boleh kosong"
+            val_3_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_4_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_5_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_6_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_7_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_8_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_9_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_10_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_11_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_12_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_13_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_14_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_15_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_16_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_17_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_18_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_19_add: {
+              required: "Kolom ini tidak boleh kosong"
+            },
+            val_20_add: {
+              required: "Kolom ini tidak boleh kosong"
             }
           },
           errorElement: 'span',
@@ -625,7 +714,7 @@
           
             var formData = new FormData($('#_formData')[0]);
 
-            var url = "{{ url('admin/storemenu') }}";
+            var url = "{{ url('admin/storetablec') }}";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

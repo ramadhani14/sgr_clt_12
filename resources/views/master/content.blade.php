@@ -15,13 +15,13 @@
 @endsection
 
 @section('contentheader')
-<h1 class="m-0">Detail</h1>
+<h1 class="m-0 align_center">{{$data->nama}}</h1>
 @endsection
 
 @section('contentheadermenu')
 <ol class="breadcrumb float-sm-right">
     <!-- <li class="breadcrumb-item">Master</li> -->
-    <li class="breadcrumb-item active">{{$data->nama}}</li>
+    <!-- <li class="breadcrumb-item active">{{$data->nama}}</li> -->
 </ol>
 @endsection
 
@@ -86,12 +86,10 @@
 <script src="{{ asset('layout/adminlte3/dist/js/demo.js') }}"></script>
 <!-- Page specific script -->
 <!-- DatePicker -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css"> -->
 <!--  Flatpickr  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
-<!-- Tinymce -->
-<script src="https://cdn.tiny.cloud/1/6yq8fapml30gqjogz5ilm4dlea09zn9rmxh9mr8fe907tqkj/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script> -->
 
 <script>
   $(document).ready(function(){
