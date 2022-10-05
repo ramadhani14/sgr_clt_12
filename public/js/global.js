@@ -426,6 +426,20 @@ function datatableinst(id){
         } ]
     });
 }
+
+function datatablemenu(id){
+    $("#"+id).DataTable({
+        "lengthChange": false,
+        "oLanguage": {
+            "sEmptyTable": "Belum Ada Data"
+        },
+        "aaSorting": [],
+        "columnDefs": [ {
+            "targets": [0,3],
+            "orderable": false
+        } ]
+    });
+}
 function datatablekomoditas(id){
     $("#"+id).DataTable({
         "lengthChange": false,

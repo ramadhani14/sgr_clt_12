@@ -47,27 +47,13 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::post('/updateUserProfil', [App\Http\Controllers\ProfilController::class, 'update']);
         Route::post('/updateUserPassword', [App\Http\Controllers\ProfilController::class, 'updatepassword']);
 
-        // Jenis Komoditas
-        Route::get('jenis/{jenis}', [App\Http\Controllers\JenisController::class, 'index']);
-        Route::post('storejenis', [App\Http\Controllers\JenisController::class, 'store']);
-        Route::post('updatejenis/{jenis}/{id}', [App\Http\Controllers\JenisController::class, 'update']);
-        Route::post('hapusjenis/{jenis}/{id}', [App\Http\Controllers\JenisController::class, 'destroy']); 
-
-        // Komoditas
-        Route::get('komoditas/{jenis}', [App\Http\Controllers\KomoditasController::class, 'index']);
-        Route::post('storekomoditas', [App\Http\Controllers\KomoditasController::class, 'store']);
-        Route::post('updatekomoditas/{jenis}/{id}', [App\Http\Controllers\KomoditasController::class, 'update']);
-        Route::post('hapuskomoditas/{jenis}/{id}', [App\Http\Controllers\KomoditasController::class, 'destroy']); 
-
-        // Status Nelayan
-        Route::get('statusnelayan', [App\Http\Controllers\StatusNelayanController::class, 'index']);
-
-        // Master Petani
+        // Master Menu
         Route::get('menu', [App\Http\Controllers\MenuController::class, 'index']);
         Route::post('storemenu', [App\Http\Controllers\MenuController::class, 'store']);
         Route::post('updatemenu/{id}', [App\Http\Controllers\MenuController::class, 'update']);
         Route::post('hapusmenu/{id}', [App\Http\Controllers\MenuController::class, 'destroy']); 
-        
+        Route::get('content/{id}', [App\Http\Controllers\MenuController::class, 'content']);
+
         // Template
         Route::get('template', [App\Http\Controllers\AdminController::class, 'indextmp']);
         Route::post('/updatetemplate/{id}', [App\Http\Controllers\AdminController::class, 'updatetmp']);
@@ -78,9 +64,10 @@ Route::middleware([IsAdmin::class])->group(function () {
     });
 });
 
-Route::post('getKabupaten', [App\Http\Controllers\CampurController::class, 'getKabupaten']);
-Route::post('getKecamatan', [App\Http\Controllers\CampurController::class, 'getKecamatan']);
-Route::post('getDesa', [App\Http\Controllers\CampurController::class, 'getDesa']);
+// Route::post('getKabupaten', [App\Http\Controllers\CampurController::class, 'getKabupaten']);
+// Route::post('getKecamatan', [App\Http\Controllers\CampurController::class, 'getKecamatan']);
+// Route::post('getDesa', [App\Http\Controllers\CampurController::class, 'getDesa']);
+Route::post('getparentmenu', [App\Http\Controllers\CampurController::class, 'getparentmenu']);
 // Auth::routes(); 
 // Auth::routes(['login' => false]);       
 Auth::routes(['register' => false]);       

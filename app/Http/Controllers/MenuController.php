@@ -21,10 +21,16 @@ class MenuController extends Controller
     {
         $menu = 'menu';
         $submenu='';
-        $data = Menu::all();
-        $batasmenu = Menu::max('posisi');
+        $data = Menu::orderByRaw('CONVERT(posisi, SIGNED) asc')->get();
+        $batasmenu = Menu::orderByRaw('CONVERT(posisi, SIGNED) desc')->first();
+
         if(!$batasmenu){
             $batasmenu = 1; 
+        }else{
+            $batasmenu = (int)$batasmenu->posisi+1;
+            if($batasmenu>10){
+                $batasmenu = 10;
+            }
         }
         $data_param = [
             'menu','submenu','data','batasmenu'
@@ -36,6 +42,7 @@ class MenuController extends Controller
         $data['posisi'] = $request->posisi_add;
         $data['nama'] = $request->nama_add;
         $data['parent_menu'] = $request->parent_menu_add;
+        $data['content'] = $request->content_add;
 
         $data['created_by'] = Auth::id();
         $data['created_at'] = Carbon::now()->toDateTimeString();
@@ -60,6 +67,7 @@ class MenuController extends Controller
         $data['posisi'] = $request->posisi[0];
         $data['nama'] = $request->nama[0];
         $data['parent_menu'] = $request->parent_menu[0];
+        $data['content'] = $request->content[0];
 
         $data['updated_by'] = Auth::id();
         $data['updated_at'] = Carbon::now()->toDateTimeString();
@@ -88,5 +96,16 @@ class MenuController extends Controller
             'status' => true,
             'message' => 'Data berhasil dihapus'
         ]);
+    }
+    public function content($id)
+    {
+        $menu = $id;
+        $submenu='';
+        $data = Menu::find($id);
+
+        $data_param = [
+            'menu','submenu','data'
+        ];
+        return view('master/content')->with(compact($data_param));
     }
 }

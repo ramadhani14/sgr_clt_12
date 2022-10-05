@@ -27,7 +27,7 @@
   background-color:silver;border-radius:4px;padding: 10px 5px 5px 5px;
 }
 nav ul .li_x a{
-  padding: 10px 0px 10px 22px !important;
+  padding: 10px 5px 10px 28px !important;
 } 
 nav ul .li_x ._sidenew{
   width: 100%;white-space: break-spaces;display: table-cell;padding: 10px 10px !important;
@@ -38,7 +38,7 @@ nav ul .li_x ._sidenew:hover{
   border-radius: 0.25rem;
 }
 .nav-sidebar .li_x .nav-link>.right, .nav-sidebar .li_x .nav-link>p>.right {
-  right: 1.5rem !important;
+  right: 1.8rem !important;
   top: 0.8rem !important;
   /* margin-top: 5px !important; */
 }
@@ -49,7 +49,18 @@ nav ul .li_x ._sidenew:hover{
 .nav-sidebar .li_x .nav-link{
   background-color: transparent !important;
 }
-
+.menuactive{
+  background-color: #007bff;
+  color: #fff !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+  border-radius: 0.25rem;
+}
+.menuactive:hover{
+  background-color: #007bff !important;
+  color: #fff !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important;
+  border-radius: 0.25rem !important;
+}
 /* nav ul .li_x i{
   position: absolute !important;
   margin-left: -30px !important;

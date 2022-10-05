@@ -12,4 +12,9 @@ class Menu extends Model
     use SoftDeletes;
     protected $table = "menu";
     protected $guarded = ["id"];
+
+    public function parent_menu_r()
+    {
+        return $this->belongsTo(Menu::class, 'parent_menu', 'id');
+    }
 }

@@ -46,26 +46,37 @@
                 <table id="tabledata" class="table  table-striped">
                   <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Parent Menu</th>
+                    <!-- <th>No</th> -->
+                    <th>Posisi</th>
                     <th>Nama Menu</th>
+                    <th>Parent Menu</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach($data as $key)
                   <tr>
-                    <td width="1%">{{$loop->iteration}}</td>
-                    <td width="25%">{{$key->id_atas}}</td>
-                    <td class="_align_center">{{$key->nama}}</td>
+                    <!-- <td width="1%">{{$loop->iteration}}</td> -->
+                    <td width="1%">{{$key->posisi}}</td>
+                    <td width="25%">{{$key->nama}}</td>
+                    <td width="25%">{{$key->parent_menu <> 0 ? $key->parent_menu_r->nama : "-"}}</td>
                     <td width="1%" class="_align_center">
                       <div class="btn-group">
                         <span data-toggle="tooltip" data-placement="left" title="Ubah Data">
                           <button data-toggle="modal" data-target="#modal-edit-{{$key->id}}" type="button" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></button>
                         </span>
+                        @php
+                          $cek = App\Models\Menu::where('parent_menu',$key->id)->get();
+                        @endphp
+                        @if(count($cek)<=0)
                         <span data-toggle="tooltip" data-placement="left" title="Hapus Data">
                           <button data-toggle="modal" data-target="#modal-hapus-{{$key->id}}" type="button" class="btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></button>
                         </span>
+                        @else
+                        <span data-toggle="tooltip" data-placement="left" title="Hapus Data Parent Menu ({{$key->nama}}) Terlebih Dahulu">
+                          <button type="button" class="btn btn-sm btn-outline-danger disabled"><i class="far fa-trash-alt"></i></button>
+                        </span>
+                        @endif
                       </div>
                     </td>
                   </tr>
@@ -108,21 +119,38 @@
             @csrf
             <div class="modal-body">
               <!-- <div class="card-body"> -->
-                <div class="form-group">
+                <div class="form-group select2readonly">
                   <label for="posisi_{{$key->id}}">Posisi</label>
-                    <select class="form-control" id="posisi_{{$key->id}}" name="posisi[]">
+                    <select class="form-control posisi" id="posisi_{{$key->id}}" name="posisi[]" id_parent_menu="parent_menu_{{$key->id}}">
                       <option value="">-- Pilih Posisi --</option>
+                      @for($a=1 ; $a<=$batasmenu ; $a++)
+                      <option value="{{$a}}" {{$key->posisi==$a ? "selected" : ""}}>{{$a}}</option>
+                      @endfor
                     </select>
                 </div>
                 <div class="form-group">
                   <label for="parent_menu_{{$key->id}}">Parent Menu</label>
-                    <select class="form-control" id="parent_menu_{{$key->id}}" name="parent_menu[]">
+                    <select class="form-control parent_menu" id="parent_menu_{{$key->id}}" name="parent_menu[]">
                       <option value="">-- Pilih Parent Menu --</option>
+                      @if($key->posisi>1)
+                        @php
+                          $menuparent = App\Models\Menu::where('posisi',$key->posisi-1)->get();
+                        @endphp
+                        @foreach($menuparent as $datamenu )
+                          <option value="{{$datamenu->id}}" {{$key->parent_menu==$datamenu->id ? "selected" : ""}}>{{$datamenu->nama}}</option>
+                        @endforeach
+                      @else
+                          <option value="0" selected>-</option>
+                      @endif
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="nama_{{$key->id}}">Nama<span class="bintang">*</span></label>
                     <input type="text" class="form-control" id="nama_{{$key->id}}" name="nama[]" placeholder="Nama" value="{{$key->nama}}">
+                </div> 
+                <div class="form-group">
+                    <label for="content_{{$key->id}}">Content</label>
+                    <textarea name="content[]" id="content_{{$key->id}}" class="form-control content_" placeholder="Content">{{$key->content}}</textarea>  
                 </div>    
                 <!-- /.form-group -->
               <!-- </div> -->
@@ -184,7 +212,7 @@
               <!-- <div class="card-body"> -->
               <div class="form-group">
                 <label for="posisi_add">Posisi</label>
-                  <select class="form-control" id="posisi_add" name="posisi_add">
+                  <select class="form-control posisi" id="posisi_add" name="posisi_add" id_parent_menu="parent_menu_add">
                     <option value="">-- Pilih Posisi --</option>
                     @for($a=1 ; $a<=$batasmenu ; $a++)
                     <option value="{{$a}}">{{$a}}</option>
@@ -194,7 +222,7 @@
             
               <div class="form-group">
                 <label for="parent_menu_add">Parent Menu</label>
-                  <select class="form-control" id="parent_menu_add" name="parent_menu_add">
+                  <select class="form-control parent_menu" id="parent_menu_add" name="parent_menu_add">
                     <option value="">-- Pilih Parent Menu --</option>
                   </select>
               </div>
@@ -202,6 +230,10 @@
                   <label for="nama_add">Nama<span class="bintang">*</span></label>
                   <input type="text" class="form-control" id="nama_add" name="nama_add" placeholder="Nama">
               </div>
+              <div class="form-group">
+                  <label for="content_add">Content</label>
+                  <textarea name="content_add" id="content_add" class="form-control content_" placeholder="Content"></textarea>  
+              </div>  
               <!-- <div class="card-body"> -->
               <!-- /.form-group -->
             <!-- </div> -->
@@ -254,6 +286,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
 <!--  Flatpickr  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
+<!-- Tinymce -->
+<script src="https://cdn.tiny.cloud/1/6yq8fapml30gqjogz5ilm4dlea09zn9rmxh9mr8fe907tqkj/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+
 <script>
   $(document).ready(function(){
     // NIK
@@ -265,14 +300,122 @@
     //     var idphoto = $(this).attr('id');
     //     onlyPhoto(idphoto);
     // });
-    datatableinst("tabledata");
+    datatablemenu("tabledata");
+
+    tinymce.init({
+        selector: ".content_", theme: "modern",
+        plugins: [
+                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+                "table contextmenu directionality emoticons paste textcolor"
+        ],
+        toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+        toolbar2: " | link unlink anchor | image media | forecolor backcolor  | print preview code ",
+        image_advtab: true,
+        height : "500",
+        file_picker_callback: function (cb, value, meta) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+
+        /*
+          Note: In modern browsers input[type="file"] is functional without
+          even adding it to the DOM, but that might not be the case in some older
+          or quirky browsers like IE, so you might want to add it to the DOM
+          just in case, and visually hide it. And do not forget do remove it
+          once you do not need it anymore.
+        */
+
+        input.onchange = function () {
+          var file = this.files[0];
+
+          var reader = new FileReader();
+          reader.onload = function () {
+            /*
+              Note: Now we need to register the blob in TinyMCEs image blob
+              registry. In the next release this part hopefully won't be
+              necessary, as we are looking to handle it internally.
+            */
+            var id = 'blobid' + (new Date()).getTime();
+            var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+            var base64 = reader.result.split(',')[1];
+            var blobInfo = blobCache.create(id, file, base64);
+            blobCache.add(blobInfo);
+
+            /* call the callback and populate the Title field with the file name */
+            cb(blobInfo.blobUri(), { title: file.name });
+          };
+          reader.readAsDataURL(file);
+        };
+
+        input.click();
+      }
+    });
 
     //Initialize Select2 Elements
-    // $('.select2bs4').select2({
-    //   placeholder: "Jenis",
-    //   allowClear: true,
-    //   theme: 'bootstrap4'
-    // })
+    $('.posisi').select2({
+      placeholder: "-- Pilih Posisi --"
+    });
+
+    $('.parent_menu').select2({
+      placeholder: "-- Pilih Parent Menu --"
+    });
+
+    $('.posisi').on('select2:select', function (e) {
+        var id_parent_menu = $(this).attr('id_parent_menu');
+        var val = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{url('getparentmenu')}}",
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+                "val":val
+            },
+            beforeSend: function () {
+                // $.LoadingOverlay("show");
+                $.LoadingOverlay("show", {
+                    image       : "/image/global/loading.gif"
+                });
+            },
+            success: function (response) {
+                if (response.status == true) {
+                    $("#"+id_parent_menu).html("");
+                    if(response.databarudb.length>0){
+                      var databaru = [ 
+                        {id : "", text:'-- Pilih Parent Menu --'} 
+                      ]; 
+                    }else{
+                      var databaru = [ 
+                        {id : 0, text:'-'} 
+                      ]; 
+                    }
+                    // console.log(alerts);
+                    response.databarudb.forEach(element => databaru.push(element));
+                    // console.log(alerts);
+                    $("#"+id_parent_menu).select2({
+                        data: databaru
+                    });
+                }else{
+                    Swal.fire({
+                        title: "Error!!!",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            },
+            error: function (xhr, status) {
+                alert('Error!!!');
+            },
+            complete: function () {
+                $.LoadingOverlay("hide");
+            }
+        });
+    });
 
     // $(document).on('change', '.input-photo', function (e) {
     //     var idphoto = $(this).attr('id');

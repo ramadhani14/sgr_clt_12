@@ -17,7 +17,7 @@ class CreateTemplate extends Seeder
     {
         $template = [
             [
-                'nama'=>'Sagara Website',
+                'nama'=>'Sagara Muslim Solution',
                 'email'=>'',
                 'no_telp'=>'',
                 'no_wa'=>'',

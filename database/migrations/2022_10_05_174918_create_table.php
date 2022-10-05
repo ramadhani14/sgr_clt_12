@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenu extends Migration
+class CreateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateMenu extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
+        Schema::create('table', function (Blueprint $table) {
             $table->id();
-            $table->string('posisi')->nullable();
-            $table->string('parent_menu')->nullable();
-            $table->string('nama')->nullable();
-            $table->longText('content')->nullable();
+            $table->string('judul')->nullable();
             $table->integer('created_by');
             $table->datetime('created_at');
             $table->integer('updated_by')->nullable();
@@ -35,6 +32,6 @@ class CreateMenu extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::dropIfExists('table');
     }
 }
