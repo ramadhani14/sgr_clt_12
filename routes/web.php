@@ -33,13 +33,15 @@ use App\Http\Middleware\IsAdmin;
 // Route::get('produkhukum', [App\Http\Controllers\UserController::class, 'produkhukum']);
 
 Route::post('userauth', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::get('kinerja', [App\Http\Controllers\UserController::class, 'kinerja']);
+Route::get('kinerja/{id}', [App\Http\Controllers\UserController::class, 'kinerjadtl']);
 // Route::post('cekusername', [App\Http\Controllers\CampurController::class, 'cekusername']);
 // Route::post('storeuser', [App\Http\Controllers\CampurController::class, 'storeuser']);
 
+Route::get('/', [App\Http\Controllers\UserController::class, 'kinerja']);
 
 Route::middleware([IsAdmin::class])->group(function () {
     
-    Route::get('/', [App\Http\Controllers\AdminController::class, 'index']);
 
     Route::group(['prefix' => 'admin'], function(){
         Route::get('home', [App\Http\Controllers\AdminController::class, 'index']);

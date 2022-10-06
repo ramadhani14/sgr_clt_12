@@ -19,7 +19,44 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <!-- SweetAlert2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <style>
+    .brand-link {
+        line-height: 1.9 !important;
+        color: black !important;
+        background: white;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+    [class*=sidebar-dark-] .nav-header {
+        color: #3a82ff !important;
+        font-weight:bold;
+    }
+    [class*=sidebar-dark-] .sidebar a {
+        color: rgba(0,0,0,.7) !important;
+    }
+    [class*=sidebar-dark-] {
+        background-color: white !important;
+    }
+    .nav-icon.fas.fa-folder{
+      color:yellow !important;
+    }
+    .nav-sidebar .li_x .nav-link>.right, .nav-sidebar .li_x .nav-link>p>.right {
+        right: 1.8rem !important;
+        top: 0.95rem !important;
+    }
+    nav ul .li_x ._sidenew:hover {
+        color: #000 !important;
+    }
+    .li_x .nav-item {
+        border-left: 2px solid #767676;
+        border-left-style: dotted;
+    }
+    .menuactive {
+        background-color: #007bff21;
+    }
+    .menuactive:hover {
+        background-color: #007bff21 !important;
+    }
+  </style>
 
   @section('header')        
 
@@ -129,6 +166,7 @@
         </div>
       </li> -->
       <!-- Notifications Dropdown Menu -->
+      @auth
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
         {{ ucfirst(Auth::user()->name) }} <i class="far fa-user"></i>
@@ -164,6 +202,19 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
+      @else
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="{{url('login')}}">
+        Login <i class="far fa-user"></i>
+          <!-- <span class="badge badge-warning navbar-badge">15</span> -->
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      @endif
       <!-- <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
@@ -177,7 +228,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url('/') }}" class="brand-link" style="font-size:1rem">
-      <img src="{{ asset($template->logo_kecil) }}" style="max-height: 30px;" alt="{{ $template->nama }}" class="brand-image img-circle elevation-3">
+      <img src="{{ asset($template->logo_kecil) }}" style="max-height: 30px;box-shadow: none !important;" alt="{{ $template->nama }}" class="brand-image img-circle elevation-3">
       <span style="font-weight:500 !important;" class="brand-text font-weight-light">{{ $template->nama }}</span>
     </a>
     
@@ -186,7 +237,6 @@
       <!-- Sidebar user panel (optional) -->
       <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ Auth::user()->photo=='' || Auth::user()->photo==NULL ? asset('image/user/unknown_user.png') : asset(Auth::user()->photo) }}" class="img-circle elevation-2" alt="{{ ucfirst(Auth::user()->name) }}">
         </div>
         <div class="info">
          
@@ -208,83 +258,9 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <!-- <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
-          <li class="nav-item">
-            <a href="{{url('admin/home')}}" class="nav-link {{$menu=='home' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-home"></i>
-              <p>
-                Home
-              </p>
-            </a>
-          </li>
 
-          <li class="nav-header">MENU</li>
+          <li class="nav-header">POHON KINERJA</li>
 
-          @if(Auth::user()->user_level==1)
-          <li class="nav-item">
-            <a href="{{url('admin/template')}}" class="nav-link {{$menu=='template' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-wrench"></i>
-              <p>
-                Website Setting
-              </p>
-            </a>
-          </li> 
-          <li class="nav-item">
-            <a href="{{url('admin/menu')}}" class="nav-link {{$menu=='menu' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-bars"></i>
-              <p>
-                Website Menu
-              </p>
-            </a>
-          </li> 
-          <li class="nav-item">
-            <a href="{{url('admin/table')}}" class="nav-link {{$menu=='table' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Table Setting
-              </p>
-            </a>
-          </li> 
-
-          <li class="nav-header">CUSTOM MENU</li>
-          <li class="nav-item">
-            <a href="{{url('admin/tablec')}}" class="nav-link {{$menu=='tablec' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-database"></i>
-              <p>
-                Table Content
-              </p>
-            </a>
-          </li> 
           @php
             $menu1 = App\Models\Menu::where('posisi',1)->get();
           @endphp
@@ -296,7 +272,7 @@
               <p>
               </p>
             </a>
-            <a href="{{url('admin/content')}}/{{$datamenu1->id}}" class="_sidenew {{$menu==$datamenu1->id ? 'menuactive' : ''}}">{{$datamenu1->nama}}</a>
+            <a href="{{url('kinerja')}}/{{$datamenu1->id}}" class="_sidenew {{$menu==$datamenu1->id ? 'menuactive' : ''}}">{{$datamenu1->nama}}</a>
             <ul class="nav nav-treeview">
             @php
               $menu2 = App\Models\Menu::where('parent_menu',$datamenu1->id)->get();
@@ -309,7 +285,7 @@
                 <p>
                 </p>
               </a>
-              <a href="{{url('admin/content')}}/{{$datamenu2->id}}" class="_sidenew {{$menu==$datamenu2->id ? 'menuactive' : ''}}">{{$datamenu2->nama}}</a>
+              <a href="{{url('kinerja')}}/{{$datamenu2->id}}" class="_sidenew {{$menu==$datamenu2->id ? 'menuactive' : ''}}">{{$datamenu2->nama}}</a>
               <ul class="nav nav-treeview">
               @php
                 $menu3 = App\Models\Menu::where('parent_menu',$datamenu2->id)->get();
@@ -322,7 +298,7 @@
                   <p>
                   </p>
                 </a>
-                <a href="{{url('admin/content')}}/{{$datamenu3->id}}" class="_sidenew {{$menu==$datamenu3->id ? 'menuactive' : ''}}">{{$datamenu3->nama}}</a>
+                <a href="{{url('kinerja')}}/{{$datamenu3->id}}" class="_sidenew {{$menu==$datamenu3->id ? 'menuactive' : ''}}">{{$datamenu3->nama}}</a>
                 <ul class="nav nav-treeview">
                 @php
                     $menu4 = App\Models\Menu::where('parent_menu',$datamenu3->id)->get();
@@ -335,7 +311,7 @@
                       <p>
                       </p>
                     </a>
-                    <a href="{{url('admin/content')}}/{{$datamenu4->id}}" class="_sidenew {{$menu==$datamenu4->id ? 'menuactive' : ''}}">{{$datamenu4->nama}}</a>
+                    <a href="{{url('kinerja')}}/{{$datamenu4->id}}" class="_sidenew {{$menu==$datamenu4->id ? 'menuactive' : ''}}">{{$datamenu4->nama}}</a>
                     <ul class="nav nav-treeview">
                     @php
                       $menu5 = App\Models\Menu::where('parent_menu',$datamenu4->id)->get();
@@ -348,7 +324,7 @@
                         <p>
                         </p>
                       </a>
-                      <a href="{{url('admin/content')}}/{{$datamenu5->id}}" class="_sidenew {{$menu==$datamenu5->id ? 'menuactive' : ''}}">{{$datamenu5->nama}}</a>
+                      <a href="{{url('kinerja')}}/{{$datamenu5->id}}" class="_sidenew {{$menu==$datamenu5->id ? 'menuactive' : ''}}">{{$datamenu5->nama}}</a>
                       <ul class="nav nav-treeview">
                       @php
                       $menu6 = App\Models\Menu::where('parent_menu',$datamenu5->id)->get();
@@ -361,7 +337,7 @@
                           <p>
                           </p>
                         </a>
-                        <a href="{{url('admin/content')}}/{{$datamenu6->id}}" class="_sidenew {{$menu==$datamenu6->id ? 'menuactive' : ''}}">{{$datamenu6->nama}}</a>
+                        <a href="{{url('kinerja')}}/{{$datamenu6->id}}" class="_sidenew {{$menu==$datamenu6->id ? 'menuactive' : ''}}">{{$datamenu6->nama}}</a>
                         <ul class="nav nav-treeview">
                         @php
                         $menu7 = App\Models\Menu::where('parent_menu',$datamenu6->id)->get();
@@ -374,7 +350,7 @@
                             <p>
                             </p>
                           </a>
-                          <a href="{{url('admin/content')}}/{{$datamenu7->id}}" class="_sidenew {{$menu==$datamenu7->id ? 'menuactive' : ''}}">{{$datamenu7->nama}}</a>
+                          <a href="{{url('kinerja')}}/{{$datamenu7->id}}" class="_sidenew {{$menu==$datamenu7->id ? 'menuactive' : ''}}">{{$datamenu7->nama}}</a>
                           <ul class="nav nav-treeview">
                           @php
                           $menu8 = App\Models\Menu::where('parent_menu',$datamenu7->id)->get();
@@ -387,7 +363,7 @@
                               <p>
                               </p>
                             </a>
-                            <a href="{{url('admin/content')}}/{{$datamenu8->id}}" class="_sidenew {{$menu==$datamenu8->id ? 'menuactive' : ''}}">{{$datamenu8->nama}}</a>
+                            <a href="{{url('kinerja')}}/{{$datamenu8->id}}" class="_sidenew {{$menu==$datamenu8->id ? 'menuactive' : ''}}">{{$datamenu8->nama}}</a>
                             <ul class="nav nav-treeview">
                             @php
                             $menu9 = App\Models\Menu::where('parent_menu',$datamenu8->id)->get();
@@ -400,7 +376,7 @@
                                 <p>
                                 </p>
                               </a>
-                              <a href="{{url('admin/content')}}/{{$datamenu9->id}}" class="_sidenew {{$menu==$datamenu9->id ? 'menuactive' : ''}}">{{$datamenu9->nama}}</a>
+                              <a href="{{url('kinerja')}}/{{$datamenu9->id}}" class="_sidenew {{$menu==$datamenu9->id ? 'menuactive' : ''}}">{{$datamenu9->nama}}</a>
                               <ul class="nav nav-treeview">
                               @php
                               $menu10 = App\Models\Menu::where('parent_menu',$datamenu9->id)->get();
@@ -413,7 +389,7 @@
                                   <p>
                                   </p>
                                 </a>
-                                <a href="{{url('admin/content')}}/{{$datamenu10->id}}" class="_sidenew {{$menu==$datamenu10->id ? 'menuactive' : ''}}">{{$datamenu10->nama}}</a>
+                                <a href="{{url('kinerja')}}/{{$datamenu10->id}}" class="_sidenew {{$menu==$datamenu10->id ? 'menuactive' : ''}}">{{$datamenu10->nama}}</a>
                                 <ul class="nav nav-treeview">
                                 </ul>
                               </li>
@@ -445,68 +421,6 @@
             </ul>
           </li>
           @endforeach
-          <!-- <br>
-          <li class="li_x nav-item">
-            <a href="#" class="nav-link" style="display: table-cell;">
-              <i class="right fas fa-angle-left"></i>
-              <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-              <p>
-              </p>
-            </a>
-            <a href="" class="_sidenew"> asdasdas</a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-              <a href="#" class="nav-link" style="display: table-cell;">
-                <i class="right fas fa-angle-left"></i>
-                <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-              </a>
-              <a href="" class="_sidenew"> asdasdas asdasdas das dasdasd as das das das as</a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                <a href="#" class="nav-link" style="display: table-cell;">
-                  <i class="right fas fa-angle-left"></i>
-                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                </a>
-                <a href="" class="_sidenew"> asdasdas</a>
-                <ul class="nav nav-treeview">
-                 
-                </ul> 
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" style="display: table-cell;">
-                  <i class="right fas fa-angle-left"></i>
-                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                </a>
-                <a href="" class="_sidenew"> asdasdas</a>
-                <ul class="nav nav-treeview">
-                 
-                </ul> 
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" style="display: table-cell;">
-                  <i class="right fas fa-angle-left"></i>
-                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                </a>
-                <a href="" class="_sidenew"> asdasdas</a>
-                <ul class="nav nav-treeview">
-                  
-                </ul> 
-              </li>
-              </ul> 
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" style="display: table-cell;">
-                  <i class="right fas fa-angle-left"></i>
-                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                </a>
-                <a href="" class="_sidenew"> asdasdas</a>
-                <ul class="nav nav-treeview">
-                 
-                </ul> 
-              </li>
-            </ul> 
-          </li> -->
-          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -603,7 +517,6 @@
           trigger : 'hover'
       });
       x = $(".menuactive").parents(".nav-item").addClass('menu-open');
-      console.log(x);
    });
 </script>
 <!-- Pooper -->
