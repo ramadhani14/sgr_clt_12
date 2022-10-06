@@ -35,10 +35,11 @@ use App\Http\Middleware\IsAdmin;
 Route::post('userauth', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::get('kinerja', [App\Http\Controllers\UserController::class, 'kinerja']);
 Route::get('kinerja/{id}', [App\Http\Controllers\UserController::class, 'kinerjadtl']);
+Route::get('data', [App\Http\Controllers\UserController::class, 'data']);
 // Route::post('cekusername', [App\Http\Controllers\CampurController::class, 'cekusername']);
 // Route::post('storeuser', [App\Http\Controllers\CampurController::class, 'storeuser']);
 
-Route::get('/', [App\Http\Controllers\UserController::class, 'kinerja']);
+Route::get('/', [App\Http\Controllers\UserController::class, 'data']);
 
 Route::middleware([IsAdmin::class])->group(function () {
     

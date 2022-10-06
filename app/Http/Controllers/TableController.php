@@ -172,17 +172,4 @@ class TableController extends Controller
         ]);
     }
 
-    public function kinerja()
-    {
-        $menu = 'kinerja';
-        $submenu='';
-        $kolom = Table::orderBy('id','asc')->get();
-        $data = TableContent::orderBy('id','asc')->get();
-
-        $data_param = [
-            'menu','submenu','data','kolom'
-        ];
-        return view('master/tablec')->with(compact($data_param));
-    }
-
 }

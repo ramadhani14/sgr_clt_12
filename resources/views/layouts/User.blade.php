@@ -49,6 +49,15 @@
     nav ul .li_x ._sidenew:hover {
         color: #000 !important;
     }
+    .nav-pills .nav-link:hover{
+        color: #000 !important;
+    }
+  
+
+    .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{
+      background-color: #007bff21 !important;
+    }
+
     .li_x .nav-item {
         border-left: 2px solid #767676;
         border-left-style: dotted;
@@ -261,12 +270,21 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-
-          <li class="nav-header">POHON KINERJA</li>
-
+          <li class="nav-item">
+            <a href="{{url('data')}}" class="nav-link {{$menu=='data' ? 'active' : '' }}">
+              <i style="color:#3a82ff" class="nav-icon fas fa-table"></i>
+              <p>
+                Data
+              </p>
+            </a>
+          </li> 
+          
           @php
-            $menu1 = App\Models\Menu::where('posisi',1)->get();
+          $menu1 = App\Models\Menu::where('posisi',1)->get();
           @endphp
+          @if(count($menu1)>0)
+          <li class="nav-header">POHON KINERJA</li>
+          @endif
           @foreach($menu1 as $datamenu1)
           <li class="li_x nav-item">
             <a href="#" class="nav-link" style="display: table-cell;">

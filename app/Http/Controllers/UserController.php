@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\User;
+use App\Models\Table;
+use App\Models\TableContent;
 use Carbon\Carbon;
 use File;
 use Auth;
@@ -33,5 +35,18 @@ class UserController extends Controller
             'menu','submenu','data'
         ];
         return view('user/kinerjadtl')->with(compact($data_param));
+    }
+
+    public function data()
+    {
+        $menu = 'data';
+        $submenu='';
+        $kolom = Table::orderBy('id','asc')->get();
+        $data = TableContent::orderBy('id','asc')->get();
+
+        $data_param = [
+            'menu','submenu','data','kolom'
+        ];
+        return view('user/data')->with(compact($data_param));
     }
 }
