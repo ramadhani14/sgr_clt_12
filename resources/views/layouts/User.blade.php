@@ -20,9 +20,12 @@
   <!-- SweetAlert2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
+    .brand-link .brand-image {
+        margin-top: 0px !important;
+    }
     .brand-link {
         line-height: 1.9 !important;
-        color: black !important;
+        color: #8b8b8b !important;
         background: white;
         border-bottom: 1px solid #dee2e6 !important;
     }
@@ -37,11 +40,11 @@
         background-color: white !important;
     }
     .nav-icon.fas.fa-folder{
-      color:yellow !important;
+      color:#cfcf00 !important;
     }
     .nav-sidebar .li_x .nav-link>.right, .nav-sidebar .li_x .nav-link>p>.right {
         right: 1.8rem !important;
-        top: 0.95rem !important;
+        top: 0.9rem !important;
     }
     nav ul .li_x ._sidenew:hover {
         color: #000 !important;
