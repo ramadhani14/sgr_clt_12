@@ -41,7 +41,7 @@
                 <center>Belum Ada Data</center>
               @else
              
-              <!-- <button data-toggle="modal" data-target="#modal-tambah" type="button" class="btn btn-md btn-primary btn-absolute">Tambah</button> -->
+              <button type="button" class="btn btn-md btn-primary btn-absolute">Diupdate terakhir tanggal : xx/xx/xxxx</button>
                 <table id="tabledata" class="table  table-striped">
                   <thead>
                   <tr>
