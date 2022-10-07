@@ -1,4 +1,4 @@
-@extends('layouts.User')
+@extends('layouts.kinerja')
 
 @section('header')
   <!-- Google Font: Source Sans Pro -->

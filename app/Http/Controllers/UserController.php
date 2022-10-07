@@ -37,9 +37,9 @@ class UserController extends Controller
         return view('user/kinerjadtl')->with(compact($data_param));
     }
 
-    public function data()
+    public function ranking()
     {
-        $menu = 'data';
+        $menu = 'ranking';
         $submenu='';
         $kolom = Table::orderBy('id','asc')->get();
         $data = TableContent::orderBy('id','asc')->get();
@@ -47,6 +47,6 @@ class UserController extends Controller
         $data_param = [
             'menu','submenu','data','kolom'
         ];
-        return view('user/data')->with(compact($data_param));
+        return view('user/ranking')->with(compact($data_param));
     }
 }

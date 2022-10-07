@@ -86,7 +86,7 @@
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav d-block d-md-none d-lg-none">
+    <ul class="navbar-nav">
       <li class="nav-item"> 
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
@@ -239,7 +239,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ url('/') }}" class="brand-link" style="font-size:1rem">
+    <a href="{{ url('/ranking') }}" class="brand-link" style="font-size:1rem">
       <img src="{{ asset($template->logo_kecil) }}" style="max-height: 30px;box-shadow: none !important;" alt="{{ $template->nama }}" class="brand-image img-circle elevation-3">
       <span style="font-weight:500 !important;" class="brand-text font-weight-light">{{ $template->nama }}</span>
     </a>
@@ -271,177 +271,13 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{url('data')}}" class="nav-link {{$menu=='data' ? 'active' : '' }}">
-              <i style="color:#3a82ff" class="nav-icon fas fa-table"></i>
+            <a href="{{url('ranking')}}" class="nav-link {{$menu=='ranking' ? 'active' : '' }}">
+              <i style="color:#3a82ff" class="nav-icon fas fa-trophy"></i>
               <p>
-                Data
+                Ranking
               </p>
             </a>
           </li> 
-          
-          @php
-          $menu1 = App\Models\Menu::where('posisi',1)->get();
-          @endphp
-          @if(count($menu1)>0)
-          <li class="nav-header">POHON KINERJA</li>
-          @endif
-          @foreach($menu1 as $datamenu1)
-          <li class="li_x nav-item">
-            <a href="#" class="nav-link" style="display: table-cell;">
-              <i class="right fas fa-angle-left"></i>
-              <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-              <p>
-              </p>
-            </a>
-            <a href="{{url('kinerja')}}/{{$datamenu1->id}}" class="_sidenew {{$menu==$datamenu1->id ? 'menuactive' : ''}}">{{$datamenu1->nama}}</a>
-            <ul class="nav nav-treeview">
-            @php
-              $menu2 = App\Models\Menu::where('parent_menu',$datamenu1->id)->get();
-            @endphp
-            @foreach($menu2 as $datamenu2)
-            <li class="nav-item">
-              <a href="#" class="nav-link" style="display: table-cell;">
-                <i class="right fas fa-angle-left"></i>
-                <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                <p>
-                </p>
-              </a>
-              <a href="{{url('kinerja')}}/{{$datamenu2->id}}" class="_sidenew {{$menu==$datamenu2->id ? 'menuactive' : ''}}">{{$datamenu2->nama}}</a>
-              <ul class="nav nav-treeview">
-              @php
-                $menu3 = App\Models\Menu::where('parent_menu',$datamenu2->id)->get();
-              @endphp
-              @foreach($menu3 as $datamenu3)
-              <li class="nav-item">
-                <a href="#" class="nav-link" style="display: table-cell;">
-                  <i class="right fas fa-angle-left"></i>
-                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                  <p>
-                  </p>
-                </a>
-                <a href="{{url('kinerja')}}/{{$datamenu3->id}}" class="_sidenew {{$menu==$datamenu3->id ? 'menuactive' : ''}}">{{$datamenu3->nama}}</a>
-                <ul class="nav nav-treeview">
-                @php
-                    $menu4 = App\Models\Menu::where('parent_menu',$datamenu3->id)->get();
-                  @endphp
-                  @foreach($menu4 as $datamenu4)
-                  <li class="nav-item">
-                    <a href="#" class="nav-link" style="display: table-cell;">
-                      <i class="right fas fa-angle-left"></i>
-                      <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                      <p>
-                      </p>
-                    </a>
-                    <a href="{{url('kinerja')}}/{{$datamenu4->id}}" class="_sidenew {{$menu==$datamenu4->id ? 'menuactive' : ''}}">{{$datamenu4->nama}}</a>
-                    <ul class="nav nav-treeview">
-                    @php
-                      $menu5 = App\Models\Menu::where('parent_menu',$datamenu4->id)->get();
-                    @endphp
-                    @foreach($menu5 as $datamenu5)
-                    <li class="nav-item">
-                      <a href="#" class="nav-link" style="display: table-cell;">
-                        <i class="right fas fa-angle-left"></i>
-                        <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                        <p>
-                        </p>
-                      </a>
-                      <a href="{{url('kinerja')}}/{{$datamenu5->id}}" class="_sidenew {{$menu==$datamenu5->id ? 'menuactive' : ''}}">{{$datamenu5->nama}}</a>
-                      <ul class="nav nav-treeview">
-                      @php
-                      $menu6 = App\Models\Menu::where('parent_menu',$datamenu5->id)->get();
-                      @endphp
-                      @foreach($menu6 as $datamenu6)
-                      <li class="nav-item">
-                        <a href="#" class="nav-link" style="display: table-cell;">
-                          <i class="right fas fa-angle-left"></i>
-                          <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                          <p>
-                          </p>
-                        </a>
-                        <a href="{{url('kinerja')}}/{{$datamenu6->id}}" class="_sidenew {{$menu==$datamenu6->id ? 'menuactive' : ''}}">{{$datamenu6->nama}}</a>
-                        <ul class="nav nav-treeview">
-                        @php
-                        $menu7 = App\Models\Menu::where('parent_menu',$datamenu6->id)->get();
-                        @endphp
-                        @foreach($menu7 as $datamenu7)
-                        <li class="nav-item">
-                          <a href="#" class="nav-link" style="display: table-cell;">
-                            <i class="right fas fa-angle-left"></i>
-                            <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                            <p>
-                            </p>
-                          </a>
-                          <a href="{{url('kinerja')}}/{{$datamenu7->id}}" class="_sidenew {{$menu==$datamenu7->id ? 'menuactive' : ''}}">{{$datamenu7->nama}}</a>
-                          <ul class="nav nav-treeview">
-                          @php
-                          $menu8 = App\Models\Menu::where('parent_menu',$datamenu7->id)->get();
-                          @endphp
-                          @foreach($menu8 as $datamenu8)
-                          <li class="nav-item">
-                            <a href="#" class="nav-link" style="display: table-cell;">
-                              <i class="right fas fa-angle-left"></i>
-                              <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                              <p>
-                              </p>
-                            </a>
-                            <a href="{{url('kinerja')}}/{{$datamenu8->id}}" class="_sidenew {{$menu==$datamenu8->id ? 'menuactive' : ''}}">{{$datamenu8->nama}}</a>
-                            <ul class="nav nav-treeview">
-                            @php
-                            $menu9 = App\Models\Menu::where('parent_menu',$datamenu8->id)->get();
-                            @endphp
-                            @foreach($menu9 as $datamenu9)
-                            <li class="nav-item">
-                              <a href="#" class="nav-link" style="display: table-cell;">
-                                <i class="right fas fa-angle-left"></i>
-                                <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                                <p>
-                                </p>
-                              </a>
-                              <a href="{{url('kinerja')}}/{{$datamenu9->id}}" class="_sidenew {{$menu==$datamenu9->id ? 'menuactive' : ''}}">{{$datamenu9->nama}}</a>
-                              <ul class="nav nav-treeview">
-                              @php
-                              $menu10 = App\Models\Menu::where('parent_menu',$datamenu9->id)->get();
-                              @endphp
-                              @foreach($menu10 as $datamenu10)
-                              <li class="nav-item">
-                                <a href="#" class="nav-link" style="display: table-cell;">
-                                  <i class="right fas fa-angle-left"></i>
-                                  <i class="nav-icon fas fa-folder" style="display: contents;"></i>
-                                  <p>
-                                  </p>
-                                </a>
-                                <a href="{{url('kinerja')}}/{{$datamenu10->id}}" class="_sidenew {{$menu==$datamenu10->id ? 'menuactive' : ''}}">{{$datamenu10->nama}}</a>
-                                <ul class="nav nav-treeview">
-                                </ul>
-                              </li>
-                              @endforeach
-                              </ul>
-                            </li>
-                            @endforeach
-                            </ul>
-                          </li>
-                          @endforeach
-                          </ul>
-                        </li>
-                        @endforeach
-                        </ul>
-                      </li>
-                      @endforeach
-                      </ul>
-                    </li>
-                    @endforeach
-                    </ul>
-                  </li>
-                  @endforeach
-                </ul>
-              </li>
-              @endforeach
-              </ul>
-            </li>
-            @endforeach
-            </ul>
-          </li>
-          @endforeach
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

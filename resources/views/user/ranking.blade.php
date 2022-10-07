@@ -1,4 +1,4 @@
-@extends('layouts.User')
+@extends('layouts.ranking')
 
 @section('header')
   <!-- Google Font: Source Sans Pro -->
@@ -15,13 +15,13 @@
 @endsection
 
 @section('contentheader')
-<h4 class="m-0 align_center" style="color: #3a82ff !important;font-weight: bold;">Data</h4>
+<h4 class="m-0 align_center" style="color: #3a82ff !important;font-weight: bold;">Ranking</h4>
 @endsection
 
 @section('contentheadermenu')
 <ol class="breadcrumb float-sm-right">
     <!-- <li class="breadcrumb-item">Master</li> -->
-    <li class="breadcrumb-item active">Data</li>
+    <li class="breadcrumb-item active">Ranking</li>
 </ol>
 @endsection
 
