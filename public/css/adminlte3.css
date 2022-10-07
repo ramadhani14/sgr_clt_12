@@ -109,3 +109,13 @@ nav ul .li_x ._sidenew:hover{
   .input-foto-error .custom-file-label{
     border-color: #dc3545;
   }
+  @media(max-width: 768px){
+  .btn-absolute{
+    font-size: 4vw;  
+    margin-top: 0vw;
+    margin-bottom: 3vw;
+    position: relative;
+    /* text-align: center; */
+    width: 100%;
+  }
+}
